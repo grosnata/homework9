@@ -10,6 +10,7 @@
 		padding: 5px;
 	}
 	#forecast{
+		display:none;
 		/*This div should not appear until the weather is returned.*/
 	}
 	#forecast div{
@@ -31,36 +32,37 @@
     	//  the low temperature for the day
     	//  the icon for the current weather.
 	
-          
-	
-		// return json.temp_min
-		// return json.temp_max
-		// return json.icon
+    $("#forecast").css("display","block");
 
-	
 
     	// You will need to update this query with the city, weather format (Celsius or Fahrenheit) and your OpenWeatherMap ID
     	 
     	// Right now I have it set to Chicago.  The default should be Ann Abor/Fahreheit.
 		var myID= "eb738ba4c849ce80b253a1b66b8194b0"
+	
 		var city_name= $("#location").val()
 		console.log(city_name)
-
-
+		
+		if (city_name === ""){
+			var city_name="Ann Arbor"
+		}
+		
+		if ($("#celcius").is(':checked')) {
+			var unit="metric"
+		}
+		else{
+			var unit="imperial"
+		}
 		// let query = "http://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units=" + unit +"&APPID=" +myID;
-		let query = "http://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units=metric&APPID=" +myID;
+		let query = "http://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units="+ unit+ "&APPID=" +myID;
         console.log("Query is :" + query)
 
         $.getJSON(query,function(json){
             console.log(JSON.stringify(json));
 				console.log(json)
-		console.log(json.main['temp'])
-		console.log(json.main['temp_min'])
-		console.log(json.main['temp_max'])
-		console.log(json.weather['icon'])
-		
-		
-			
+
+
+	
 		if ("temp" in json.main){
         	$("#temp").text(json.main['temp']);
 			$("#high").text(json.main['temp_max'])
@@ -70,10 +72,11 @@
 			$("#loc").text(json.name)
 		}
 		
-		if ("icon" in json.weather){
-			var url= "http://openweathermap.org/img/wn/"+ json.weather[0]['icon']+".png"
+		if ("weather" in json){
+			var url= "http://openweathermap.org/img/w/"+ json.weather[0]['icon']+".png"
 			$("#tempImg").attr("src",url)
 		}
+		
     })
     }
 	
