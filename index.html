@@ -54,7 +54,7 @@
 			var unit="imperial"
 		}
 		// let query = "http://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units=" + unit +"&APPID=" +myID;
-		let query = "http://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units="+ unit+ "&APPID=" +myID;
+		let query = "https://api.openweathermap.org/data/2.5/weather?q=" +city_name+ "&units="+ unit+ "&APPID=" +myID;
         console.log("Query is :" + query)
 
         $.getJSON(query,function(json){
@@ -73,7 +73,7 @@
 		}
 		
 		if ("weather" in json){
-			var url= "http://openweathermap.org/img/w/"+ json.weather[0]['icon']+".png"
+			var url= "https://openweathermap.org/img/w/"+ json.weather[0]['icon']+".png"
 			$("#tempImg").attr("src",url)
 		}
 		
